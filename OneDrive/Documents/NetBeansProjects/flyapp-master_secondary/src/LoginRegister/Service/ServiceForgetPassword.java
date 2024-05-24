@@ -18,46 +18,24 @@ import javax.swing.JOptionPane;
 public class ServiceForgetPassword {
 
     private final Connection con;
+    private final OTPMail otpMail;
 
     public ServiceForgetPassword() {
         con = DatabaseConnection.getInstance().getConnection();
+        otpMail = new OTPMail();
     }
 
     public void sendPassword(String recipientEmail, String password) {
-        final String senderEmail = "flystudio79@gmail.com"; // Ganti dengan alamat email Anda
-        final String senderPassword = "zqoltmgplenslzcr"; // Ganti dengan kata sandi email Anda
+        String subject = "Your Account Password";
+        String messageText = """
+                Dear User,
 
-        // Konfigurasi properti untuk mengirim email melalui SMTP server
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com"); // Sesuaikan dengan SMTP server Anda (contoh: smtp.gmail.com)
-        props.put("mail.smtp.port", "587"); // Sesuaikan port SMTP
+                Your account password is: """ + password + "\n\n"
+                + "Best regards,\n"
+                + "Your Application Team";
 
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(senderEmail, senderPassword);
-            }
-        });
-
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(senderEmail));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail));
-            message.setSubject("Your Account Password");
-            message.setText("""
-                            Dear User,
-                            
-                            Your account password is : """ + password + "\n\n"
-                    + "Best regards,\n"
-                    + "Your Application Team");
-
-            Transport.send(message);
-
-            JOptionPane.showMessageDialog(null, "Password sent successfully to " + recipientEmail);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
+        otpMail.sendEmail(recipientEmail, subject, messageText);
+        JOptionPane.showMessageDialog(null, "Password sent successfully to " + recipientEmail);
     }
 
     public boolean sendPasswordEmail(String recipientEmail, String password) {
@@ -71,10 +49,8 @@ public class ServiceForgetPassword {
         String passwordFromDatabase = null;
 
         try {
-            // Cek di tabel user
             passwordFromDatabase = getPasswordFromTable(queryUser, recipientEmail);
 
-            // Jika tidak ada di tabel user, cek di tabel admin
             if (passwordFromDatabase == null) {
                 passwordFromDatabase = getPasswordFromTable(queryAdmin, recipientEmail);
             }

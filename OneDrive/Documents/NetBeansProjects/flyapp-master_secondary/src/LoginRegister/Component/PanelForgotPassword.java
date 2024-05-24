@@ -2,19 +2,23 @@ package LoginRegister.Component;
 
 import LoginRegister.Model.ModelUser;
 import LoginRegister.Service.ServiceForgetPassword;
+import LoginRegister.Service.ServiceOTP;
 import java.awt.Window;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import swing.Glass;
 
 public class PanelForgotPassword extends javax.swing.JPanel {
 
     private ServiceForgetPassword serviceForgot;
+    private ServiceOTP serviceOtp;
     private ModelUser user;
     private Glass glass;
 
     public PanelForgotPassword() {
         initComponents();
         serviceForgot = new ServiceForgetPassword();
+        serviceOtp = new ServiceOTP();
         glass = new Glass();
     }
 
@@ -132,15 +136,37 @@ public class PanelForgotPassword extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        String recipientEmail = txtEmail.getText().trim();
+        String email = txtEmail.getText().trim();
 
-        // Validasi Email
-        if (isValidEmail(recipientEmail)) {
-            // Kirim Email dengan Password yang diperoleh dari Database
-            sendPasswordByEmail(recipientEmail);
+        if (!isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Invalid email address.");
+            return;
+        }
+
+        if (serviceOtp.sendOtpEmail(email)) {
+            java.awt.Window parentWindow = SwingUtilities.getWindowAncestor(this);
+            OTP otpDialog;
+
+            if (parentWindow instanceof java.awt.Frame) {
+                otpDialog = new OTP((java.awt.Frame) parentWindow, true, email);
+            } else {
+                otpDialog = new OTP((javax.swing.JDialog) parentWindow, true, email);
+            }
+
+            otpDialog.setVisible(true);
+
+            if (otpDialog.isOtpVerified()) {
+                String password = serviceForgot.getPasswordByEmail(email);
+                if (password != null && !password.isEmpty()) {
+                    serviceForgot.sendPassword(email, password);
+                } else {
+                    System.out.println("Password not available.");
+                }
+            } else {
+                System.out.println("OTP verification failed.");
+            }
         } else {
-            // Jika email tidak valid
-            System.out.println("Invalid Email");
+            System.out.println("Failed to send OTP.");
         }
     }//GEN-LAST:event_btnSendActionPerformed
 

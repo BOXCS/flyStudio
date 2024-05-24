@@ -50,14 +50,6 @@ public class ModelDesignerLogin {
         this.typeContent = typeContent;
     }
 
-    public String getOther() {
-        return other;
-    }
-
-    public void setOther(String other) {
-        this.other = other;
-    }
-
     public String getStatus() {
         return Status;
     }
@@ -66,14 +58,13 @@ public class ModelDesignerLogin {
         this.Status = Status;
     }
 
-    public ModelDesignerLogin(int designerID, String userName, String email, String password, String instagram, String typeContent, String other, String Status) {
+    public ModelDesignerLogin(int designerID, String userName, String email, String password, String instagram, String typeContent, String Status) {
         this.designerID = designerID;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.instagram = instagram;
         this.typeContent = typeContent;
-        this.other = other;
         this.Status = Status;
     }
 
@@ -86,6 +77,5 @@ public class ModelDesignerLogin {
     private String password;
     private String instagram;
     private String typeContent;
-    private String other;
     private String Status;
 }

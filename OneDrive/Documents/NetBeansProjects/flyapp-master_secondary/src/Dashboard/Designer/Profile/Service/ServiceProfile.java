@@ -1,5 +1,6 @@
 package Dashboard.Designer.Profile.Service;
 
+import Dashboard.Designer.Model.ModelDesignerAccount;
 import Dashboard.Designer.Profile.Model.ModelRatingView;
 import connection.DatabaseConnection;
 import java.io.ByteArrayOutputStream;
@@ -210,6 +211,94 @@ public class ServiceProfile {
             }
         }
         return averageStarCount;
+    }
+
+    public static ModelDesignerAccount getDesignerById(int designerId) throws SQLException {
+        ModelDesignerAccount designer = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement("SELECT * FROM designer WHERE designer_id = ?");
+            stmt.setInt(1, designerId);
+            rs = stmt.executeQuery();
+            if (rs.next()) {
+                designer = new ModelDesignerAccount();
+                designer.setDesignerId(rs.getInt("designer_id"));
+                designer.setUsername(rs.getString("username"));
+                designer.setEmail(rs.getString("email"));
+                designer.setPassword(rs.getString("password"));
+                designer.setInstagram(rs.getString("instagram"));
+                designer.setContentType(rs.getString("typeContent"));
+                designer.setStatus(rs.getString("status"));
+            }
+        } finally {
+            // Close resources in finally block to ensure they are closed even if an exception occurs
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return designer;
+    }
+
+    public static void updateDesigner(int userId, String username, String email, String password, String instagram, String contentType, String status) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement("UPDATE designer SET username = ?, email = ?, password = ?, instagram = ?, typeContent = ?, status = ? WHERE designer_id = ?");
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            stmt.setString(3, password);
+            stmt.setString(4, instagram);
+            stmt.setString(5, contentType);
+            stmt.setString(6, status);
+            stmt.setInt(7, userId);
+
+            // Jalankan pernyataan dan periksa hasilnya
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new SQLException("Failed to update designer, affected rows: " + rowsAffected);
+            }
+        } finally {
+            // Close resources in finally block to ensure they are closed even if an exception occurs
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void deletePortfolio(String portfolioId) throws SQLException {
+        // Gunakan try-with-resources untuk menangani PreparedStatement
+        try (PreparedStatement stmt = getConnection().prepareStatement("DELETE FROM portfolio WHERE portfolio_id = ?")) {
+            stmt.setString(1, portfolioId);
+
+            // Jalankan pernyataan dan periksa hasilnya
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected != 1) {
+                throw new SQLException("Failed to delete portfolio, affected rows: " + rowsAffected);
+            }
+        } catch (SQLException e) {
+            // Tangani kesalahan dan lempar ulang pengecualian
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }

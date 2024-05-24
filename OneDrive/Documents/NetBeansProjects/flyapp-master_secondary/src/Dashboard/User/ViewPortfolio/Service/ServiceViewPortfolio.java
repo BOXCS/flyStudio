@@ -101,4 +101,43 @@ public class ServiceViewPortfolio {
         return users;
     }
 
+    public List<ModelUser> getUsersByTypeContent(String typeContent) {
+        List<ModelUser> users = new ArrayList<>();
+
+        PreparedStatement p = null;
+        ResultSet r = null;
+
+        try {
+            String sql = "SELECT designer_id, username "
+                    + "FROM designer "
+                    + "WHERE typeContent = ?";
+            p = getConnection().prepareStatement(sql);
+            p.setString(1, typeContent);
+
+            r = p.executeQuery();
+            while (r.next()) {
+                int designerId = r.getInt("designer_id");
+                String username = r.getString("username");
+
+                ModelUser user = new ModelUser(designerId, username);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (r != null) {
+                    r.close();
+                }
+                if (p != null) {
+                    p.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return users;
+    }
+
 }

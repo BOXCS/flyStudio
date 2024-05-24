@@ -60,7 +60,6 @@ public class AddMessageMain extends javax.swing.JPanel {
 
         roundPanel1 = new Dashboard.Swing.RoundPanel();
         cmdAddMessage = new swing.ButtonDash();
-        cmdAddTips = new swing.ButtonDash();
         buttonDash3 = new swing.ButtonDash();
         jScrollPane1 = new javax.swing.JScrollPane();
         body = new javax.swing.JPanel();
@@ -72,10 +71,6 @@ public class AddMessageMain extends javax.swing.JPanel {
         cmdAddMessage.setForeground(new java.awt.Color(255, 255, 255));
         cmdAddMessage.setText("+ Add Message");
         cmdAddMessage.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
-
-        cmdAddTips.setForeground(new java.awt.Color(255, 255, 255));
-        cmdAddTips.setText("+ Add Tips");
-        cmdAddTips.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
 
         buttonDash3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/User/SeeOrder/icon/hint.png"))); // NOI18N
         buttonDash3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
@@ -97,9 +92,7 @@ public class AddMessageMain extends javax.swing.JPanel {
                     .addComponent(jScrollPane1)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addComponent(cmdAddMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdAddTips, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 370, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 454, Short.MAX_VALUE)
                         .addComponent(buttonDash3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -109,9 +102,7 @@ public class AddMessageMain extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmdAddMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmdAddTips, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonDash3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(buttonDash3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addContainerGap())
@@ -134,7 +125,6 @@ public class AddMessageMain extends javax.swing.JPanel {
     private javax.swing.JPanel body;
     private swing.ButtonDash buttonDash3;
     private swing.ButtonDash cmdAddMessage;
-    private swing.ButtonDash cmdAddTips;
     private javax.swing.JScrollPane jScrollPane1;
     private Dashboard.Swing.RoundPanel roundPanel1;
     // End of variables declaration//GEN-END:variables

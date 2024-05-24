@@ -1,5 +1,6 @@
-package Dashboard.Designer.Component;
+package video;
 
+import Dashboard.Designer.Component.*;
 import Dashboard.Designer.Profile.Service.ServiceProfile;
 import connection.DatabaseConnection;
 import java.awt.BorderLayout;
@@ -24,17 +25,16 @@ import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.embedded.EmbeddedMediaPlayer;
 
-public class VideoPortfolio extends JFrame {
+public class VideoPortfolioUser extends JFrame {
 
     private final EmbeddedMediaPlayerComponent mediaPlayerComponent;
     private final JButton pauseButton;
     private final JButton skipForwardButton;
     private final JButton skipBackwardButton;
-    private final JButton deleteButton;
     private final String portfolioId;
     private ServiceProfile serviceProfle;
 
-    public VideoPortfolio(String portfolioId) {
+    public VideoPortfolioUser(String portfolioId) {
         this.portfolioId = portfolioId;
         setSize(1280, 720);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Hanya menutup frame ini, tidak semua frame
@@ -50,13 +50,11 @@ public class VideoPortfolio extends JFrame {
         pauseButton = new JButton("Play/Pause");
         skipForwardButton = new JButton("Skip Forward 5s");
         skipBackwardButton = new JButton("Skip Backward 5s");
-        deleteButton = new JButton("Delete Portfolio");
 
         JPanel controlPanel = new JPanel();
         controlPanel.add(pauseButton);
         controlPanel.add(skipBackwardButton);
         controlPanel.add(skipForwardButton);
-        controlPanel.add(deleteButton);
 
         getContentPane().add(controlPanel, BorderLayout.SOUTH);
 
@@ -91,14 +89,6 @@ public class VideoPortfolio extends JFrame {
             }
         });
 
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Panggil metode untuk menghapus portofolio dari database
-                deletePortfolioFromDatabase();
-            }
-        });
-
         setVisible(true);
 
         // Mulai memainkan video dari database ketika frame dibuat
@@ -111,9 +101,9 @@ public class VideoPortfolio extends JFrame {
         try {
             videoData = serviceProfle.getVideoFromDatabase(portfolioId);
         } catch (SQLException ex) {
-            Logger.getLogger(VideoPortfolio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VideoPortfolioUser.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(VideoPortfolio.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VideoPortfolioUser.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Memainkan video dari data byte array
@@ -140,19 +130,6 @@ public class VideoPortfolio extends JFrame {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void deletePortfolioFromDatabase() {
-        try {
-            // Panggil metode untuk menghapus portofolio dari database berdasarkan ID portofolio
-            serviceProfle.deletePortfolio(portfolioId);
-            // Jika penghapusan berhasil, tampilkan pesan sukses
-            System.out.println("Portfolio deleted successfully.");
-            // Tutup frame setelah portofolio dihapus
-            dispose();
-        } catch (SQLException ex) {
-            Logger.getLogger(VideoPortfolio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

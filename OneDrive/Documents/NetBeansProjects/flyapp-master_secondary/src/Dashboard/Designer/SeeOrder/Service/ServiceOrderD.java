@@ -29,12 +29,13 @@ public class ServiceOrderD {
 
         try {
             // Query untuk mendapatkan data dari tabel transaction dengan status Active dan designer tertentu
-            String sql = "SELECT transaction_number, username, product_name, level, designer, created_at, amount, status FROM transaction WHERE status = 'Active' AND designer = ?";
+            String sql = "SELECT type, transaction_number, username, product_name, level, designer, created_at, amount, status FROM transaction WHERE status = 'Active' AND designer = ?";
             PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
             p.setString(1, designerName); // Set parameter designer
             ResultSet r = p.executeQuery();
 
             while (r.next()) {
+                String type = r.getString("type");
                 String number = r.getString("transaction_number");
                 String username = r.getString("username");
                 String product = r.getString("product_name");
@@ -48,7 +49,7 @@ public class ServiceOrderD {
                 String formattedDate = new SimpleDateFormat("MMM dd, yyyy").format(created_at);
 
                 // Menambahkan data ke dalam tabel
-                model.addRow(new Object[]{number, username, product, level, designer, formattedDate, "$" + amount, status});
+                model.addRow(new Object[]{type, number, username, product, level, designer, formattedDate, "$" + amount, status});
             }
 
             r.close();
@@ -265,7 +266,7 @@ public class ServiceOrderD {
 //                parameters.put("status", status);
 
                 // Select the report file based on transaction type
-                String reportFilePath = "C:\\Users\\aisya\\OneDrive\\Documents\\NetBeansProjects\\flyapp_secondary\\src\\nota\\Main\\report1.jasper";
+                String reportFilePath = "C:\\Users\\aisya\\OneDrive\\Documents\\NetBeansProjects\\flyapp-master_secondary\\src\\nota\\Main\\report1.jasper";
 
                 // Fill the report with data and parameters
                 JasperPrint jasperPrint = JasperFillManager.fillReport(

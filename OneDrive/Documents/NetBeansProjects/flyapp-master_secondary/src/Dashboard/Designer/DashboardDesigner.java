@@ -8,6 +8,7 @@ import Dashboard.Designer.Form.FormDesigner;
 import Dashboard.Designer.Profile.Main.ProfileMain;
 import Dashboard.Designer.SeeOrder.SeeOrderDMain;
 import Dashboard.Designer.SendOrder.Main.SendOrderMain;
+import Dashboard.Designer.Setting.SettingMain;
 import LoginRegister.Main;
 //import Dashboard.Admin.form.FormHome;
 import LoginRegister.Model.ModelUser;
@@ -56,6 +57,9 @@ public class DashboardDesigner extends javax.swing.JFrame {
                         break;
                     case 4:
                         showForm(new SendOrderMain());
+                        break;
+                    case 5:
+                        showForm(new SettingMain(user));
                         break;
                     case 6:
                         showLogOutPopup();

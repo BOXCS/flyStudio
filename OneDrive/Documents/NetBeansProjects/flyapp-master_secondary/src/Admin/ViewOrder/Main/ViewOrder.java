@@ -60,7 +60,7 @@ public class ViewOrder extends javax.swing.JPanel {
         tableCancelled.getColumnModel().getColumn(8).setCellRenderer(new CellCancelledRenderer());
         tableCancelled.getColumnModel().getColumn(8).setCellEditor(new TableCancelledCellEditor(eventC));
 
-        TableActionLateEvent eventD = new TableActionLateEvent() {
+        TableActionLateEvent eventL = new TableActionLateEvent() {
             @Override
             public void onApprove(int row) {
                 int selectedRow = tableLate.getSelectedRow();
@@ -79,8 +79,8 @@ public class ViewOrder extends javax.swing.JPanel {
                 }
             }
         };
-        tableLate.getColumnModel().getColumn(8).setCellRenderer(new CellCancelledRenderer());
-        tableLate.getColumnModel().getColumn(8).setCellEditor(new TableLateCellEditor(eventD));
+        tableLate.getColumnModel().getColumn(8).setCellRenderer(new CellLateRenderer());
+        tableLate.getColumnModel().getColumn(8).setCellEditor(new TableLateCellEditor(eventL));
 
     }
 

@@ -54,7 +54,7 @@ public class Menu extends javax.swing.JPanel {
         split("Job Apply");
         addMenu("send", "Send Order", 4);
         space();
-        addMenu("7", "Setting", 5);
+        addMenu("cog", "Setting", 5);
         addMenu("exit", "Logout", 6);
     }
 

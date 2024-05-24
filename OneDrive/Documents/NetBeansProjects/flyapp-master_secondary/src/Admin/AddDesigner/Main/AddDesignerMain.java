@@ -26,23 +26,6 @@ public class AddDesignerMain extends javax.swing.JPanel {
         service = new ServiceLogin();
         loading = new PanelLoading();
         setOpaque(false);
-
-        cbContent.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    updateTxtOtherVisibility();
-                }
-            }
-        });
-
-        cbContent.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                updateTxtOtherVisibility();
-            }
-
-        });
     }
 
     @SuppressWarnings("unchecked")
@@ -60,14 +43,12 @@ public class AddDesignerMain extends javax.swing.JPanel {
         txtInsta = new swing.MyTextField();
         jLabel5 = new javax.swing.JLabel();
         cbContent = new javax.swing.JComboBox<>();
-        txtOther = new swing.MyTextField();
         jLabel6 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         btnCreate = new swing.Button();
         jLabel7 = new javax.swing.JLabel();
         txtEmail = new swing.MyTextField();
-        btnEdit = new swing.Button();
 
         roundPanel1.setBackground(new java.awt.Color(0, 0, 0, 50));
 
@@ -91,7 +72,7 @@ public class AddDesignerMain extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Type of Content");
 
-        cbContent.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Video Editing", "Design Graphic", "3D Modelling", "Other" }));
+        cbContent.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Video Editing", "Design Graphic", "3D Modelling" }));
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,16 +102,6 @@ public class AddDesignerMain extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Email");
 
-        btnEdit.setBackground(new java.awt.Color(132, 132, 215));
-        btnEdit.setForeground(new java.awt.Color(255, 255, 255));
-        btnEdit.setText("Edit");
-        btnEdit.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        btnEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);
         roundPanel1.setLayout(roundPanel1Layout);
         roundPanel1Layout.setHorizontalGroup(
@@ -143,7 +114,6 @@ public class AddDesignerMain extends javax.swing.JPanel {
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtOther, javax.swing.GroupLayout.PREFERRED_SIZE, 364, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
                             .addGroup(roundPanel1Layout.createSequentialGroup()
                                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,8 +135,7 @@ public class AddDesignerMain extends javax.swing.JPanel {
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jRadioButton2)
                     .addComponent(jRadioButton1)
-                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(188, 188, 188))
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addGap(90, 90, 90)
@@ -196,18 +165,15 @@ public class AddDesignerMain extends javax.swing.JPanel {
                         .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtInsta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtInsta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cbContent, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtOther, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addGap(81, 81, 81))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -234,14 +200,9 @@ public class AddDesignerMain extends javax.swing.JPanel {
         String password = String.valueOf(txtPass.getPassword());
         String instagram = txtInsta.getText().trim();
         String typeContent = cbContent.getSelectedItem().toString();
-        String other = txtOther.getText().trim();
         String status = jRadioButton1.isSelected() ? "Available" : "Unavailable";
 
-        if (!other.isEmpty()) {
-            typeContent += " - " + other;
-        }
-
-        designerLogin = new ModelDesignerLogin(0, userName, email, password, instagram, typeContent, other, status);
+        designerLogin = new ModelDesignerLogin(0, userName, email, password, instagram, typeContent, status);
 
         try {
             // Check for duplicate username before attempting to insert
@@ -269,29 +230,17 @@ public class AddDesignerMain extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditActionPerformed
-
     private void resetForm() {
         txtUsername.setText("");
         txtEmail.setText("");
         txtPass.setText("");
         txtInsta.setText("");
         cbContent.setSelectedIndex(0);
-        txtOther.setText("");
         jRadioButton1.setSelected(true);
-    }
-
-    private void updateTxtOtherVisibility() {
-        txtOther.setVisible(false);
-        String selectedContent = cbContent.getSelectedItem().toString();
-        txtOther.setVisible("Other".equals(selectedContent));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private swing.Button btnCreate;
-    private swing.Button btnEdit;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbContent;
     private javax.swing.JLabel jLabel1;
@@ -306,7 +255,6 @@ public class AddDesignerMain extends javax.swing.JPanel {
     private Dashboard.Swing.RoundPanel roundPanel1;
     private swing.MyTextField txtEmail;
     private swing.MyTextField txtInsta;
-    private swing.MyTextField txtOther;
     private swing.MyPasswordField txtPass;
     private swing.MyTextField txtUsername;
     // End of variables declaration//GEN-END:variables

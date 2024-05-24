@@ -23,45 +23,45 @@ public class FootageMain extends javax.swing.JFrame {
         
         mailService = new MailFootage();
         
-        areaFootage.setForeground(Color.GRAY);
-        areaFootage.setText("e.g Drive, Mediafire, etc");
-        areaFootage.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (areaFootage.getText().equals("e.g Drive, Mediafire, etc")) {
-                    areaFootage.setText("");
-                    areaFootage.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (areaFootage.getText().isEmpty()){
-                    areaFootage.setForeground(Color.GRAY);
-                    areaFootage.setText("e.g Drive, Mediafire, etc");
-                }
-            }
-        });
-        
-        areaInfo.setForeground(Color.GRAY);
-        areaInfo.setText("e.g Resolution, Goal, Duration, etc");
-        areaInfo.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (areaInfo.getText().equals("e.g Resolution, Goal, Duration, etc")) {
-                    areaInfo.setText("");
-                    areaInfo.setForeground(Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (areaInfo.getText().isEmpty()){
-                    areaInfo.setForeground(Color.GRAY);
-                    areaInfo.setText("e.g Resolution, Goal, Duration, etc");
-                }
-            }
-        });
+//        areaFootage.setForeground(Color.GRAY);
+//        areaFootage.setText("e.g Drive, Mediafire, etc");
+//        areaFootage.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent e) {
+//                if (areaFootage.getText().equals("e.g Drive, Mediafire, etc")) {
+//                    areaFootage.setText("");
+//                    areaFootage.setForeground(Color.BLACK);
+//                }
+//            }
+//
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                if (areaFootage.getText().isEmpty()){
+//                    areaFootage.setForeground(Color.GRAY);
+//                    areaFootage.setText("e.g Drive, Mediafire, etc");
+//                }
+//            }
+//        });
+//        
+//        areaInfo.setForeground(Color.GRAY);
+//        areaInfo.setText("e.g Resolution, Goal, Duration, etc");
+//        areaInfo.addFocusListener(new FocusListener() {
+//            @Override
+//            public void focusGained(FocusEvent e) {
+//                if (areaInfo.getText().equals("e.g Resolution, Goal, Duration, etc")) {
+//                    areaInfo.setText("");
+//                    areaInfo.setForeground(Color.BLACK);
+//                }
+//            }
+//
+//            @Override
+//            public void focusLost(FocusEvent e) {
+//                if (areaInfo.getText().isEmpty()){
+//                    areaInfo.setForeground(Color.GRAY);
+//                    areaInfo.setText("e.g Resolution, Goal, Duration, etc");
+//                }
+//            }
+//        });
         
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -109,7 +109,7 @@ public class FootageMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(3, 0, 45));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -134,9 +134,13 @@ public class FootageMain extends javax.swing.JFrame {
             }
         });
 
+        textAreaScroll1.setLabelText("e.g Drive, Mediafire, etc");
+
         areaFootage.setColumns(20);
         areaFootage.setRows(5);
         textAreaScroll1.setViewportView(areaFootage);
+
+        textAreaScroll2.setLabelText("e.g Resolution, Goal, Duration, etc");
 
         areaInfo.setColumns(20);
         areaInfo.setRows(5);

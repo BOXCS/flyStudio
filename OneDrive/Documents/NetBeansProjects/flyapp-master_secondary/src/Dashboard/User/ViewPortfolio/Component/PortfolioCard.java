@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import video.VideoPortfolioUser;
 
 public class PortfolioCard extends javax.swing.JPanel {
 
@@ -61,7 +62,7 @@ public class PortfolioCard extends javax.swing.JPanel {
     private void playPortfolioMedia(ModelViewPortfolio portfolio) {
         if (portfolio.getMediaType().equalsIgnoreCase("video")) {
             // Buat instance VideoPortfolio dan tampilkan video
-            VideoPortfolio videoPortfolio = new VideoPortfolio(String.valueOf(portfolio.getPortfolioId()));
+            VideoPortfolioUser videoPortfolio = new VideoPortfolioUser(String.valueOf(portfolio.getPortfolioId()));
             videoPortfolio.playVideo(portfolio.getMediaContent());
         } else if (portfolio.getMediaType().equalsIgnoreCase("image")) {
             Imageportfolio displayPreview = new Imageportfolio(String.valueOf(portfolio.getPortfolioId()));
