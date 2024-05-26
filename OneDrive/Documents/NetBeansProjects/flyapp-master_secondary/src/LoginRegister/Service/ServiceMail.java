@@ -20,6 +20,8 @@ public class ServiceMail {
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.auth", "true");
         prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.ssl.trust", "*");
+        
         String username = "flystudio79@gmail.com";
         String password = "wqqz eevl gglj flrw";    //  Your email password here
         Session session = Session.getInstance(prop, new javax.mail.Authenticator() {
@@ -40,7 +42,8 @@ public class ServiceMail {
             if (e.getMessage().equals("Invalid Addresses")) {
                 ms.setMessage("Invalid email");
             } else {
-                ms.setMessage("Error");
+                ms.setMessage("Error Unknown");
+                e.printStackTrace();
             }
         }
         return ms;

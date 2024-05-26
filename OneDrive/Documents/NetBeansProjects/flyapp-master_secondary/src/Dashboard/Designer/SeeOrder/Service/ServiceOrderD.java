@@ -21,6 +21,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import notif.Mail.MailNotification;
 import java.sql.Connection;
 import java.sql.Blob;
+import raven.alerts.MessageAlerts;
 
 public class ServiceOrderD {
 
@@ -314,11 +315,12 @@ public class ServiceOrderD {
 
     public static void approveOrder(String transactionNumber, String userName, ModelUser user) {
         try {
-            // Query untuk mengupdate status transaksi menjadi "Approved"
-            String sql = "UPDATE transaction SET status = 'Active' WHERE transaction_number = ? AND username = ?";
+            // Query untuk mengupdate status transaksi menjadi "Active" dan mengisi approve_at dengan timestamp saat ini
+            String sql = "UPDATE transaction SET status = 'Active', approve_at = ? WHERE transaction_number = ? AND username = ?";
             PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
-            p.setString(1, transactionNumber); // Set parameter nomor transaksi
-            p.setString(2, userName);
+            p.setTimestamp(1, new java.sql.Timestamp(System.currentTimeMillis())); // Set parameter approve_at
+            p.setString(2, transactionNumber); // Set parameter nomor transaksi
+            p.setString(3, userName);
             int updatedRows = p.executeUpdate();
 
             if (updatedRows > 0) {
@@ -421,9 +423,9 @@ public class ServiceOrderD {
                 insertStmt.setString(3, productType.equalsIgnoreCase("Video Editing") ? "video" : "image");
                 insertStmt.executeUpdate();
 
-                JOptionPane.showMessageDialog(null, "Media content added to portfolio successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                MessageAlerts.getInstance().showMessage("Success", "Media added to portfolio", MessageAlerts.MessageType.SUCCESS);
             } else {
-                JOptionPane.showMessageDialog(null, "No media content found for the selected transaction.", "Error", JOptionPane.ERROR_MESSAGE);
+                MessageAlerts.getInstance().showMessage("Error", "No media added", MessageAlerts.MessageType.ERROR);
             }
         } catch (SQLException e) {
             e.printStackTrace();

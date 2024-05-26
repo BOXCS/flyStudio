@@ -75,7 +75,7 @@ public class SendOrderPanel extends javax.swing.JPanel {
             connection = ServiceSendOrder.getConnection();
             serviceSendOrder.insertResult(transactionNumber, selectedFiles);
 
-            JOptionPane.showMessageDialog(this, "All selected files sent successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(this, "All selected files sent successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Failed to send files: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();

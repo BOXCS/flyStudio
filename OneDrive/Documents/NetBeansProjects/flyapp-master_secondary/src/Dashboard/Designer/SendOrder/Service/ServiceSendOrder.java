@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 import notif.Mail.MailNotification;
+import raven.alerts.MessageAlerts;
 
 public class ServiceSendOrder {
 
@@ -143,6 +144,15 @@ public class ServiceSendOrder {
         Connection connection = null;
         try {
             connection = getConnection();
+
+            // Periksa status transaksi
+            String transactionStatus = getTransactionStatus(transactionNumber);
+            if (!transactionStatus.equalsIgnoreCase("Active")) {
+//                JOptionPane.showMessageDialog(null, "Transaction not in Active");
+                MessageAlerts.getInstance().showMessage("Error", "Transaction not in Active", MessageAlerts.MessageType.ERROR);
+                return;
+            }
+
             // Menentukan tipe data yang akan ditambahkan
             for (File file : files) {
                 // Dapatkan ekstensi file
@@ -189,6 +199,7 @@ public class ServiceSendOrder {
 
             // Tampilkan pesan sukses
             System.out.println("Data berhasil disimpan ke dalam tabel.");
+            MessageAlerts.getInstance().showMessage("Success", "Result sent", MessageAlerts.MessageType.SUCCESS);
 
             // Update status transaksi menjadi "Pending"
             String updateSql = "UPDATE transaction SET status = ? WHERE transaction_number = ?";
@@ -201,10 +212,24 @@ public class ServiceSendOrder {
 //            // Kirim notifikasi email
 //            MailNotification mailNotif = new MailNotification();
 //            mailNotif.sendNotification(recipientEmail, "Notification", "Your order with number " + transactionNumber + " has been sent by the designer.");
-
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String getTransactionStatus(String transactionNumber) throws SQLException {
+        String status = "";
+        Connection connection = getConnection();
+        String query = "SELECT status FROM transaction WHERE transaction_number = ?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, transactionNumber);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    status = resultSet.getString("status");
+                }
+            }
+        }
+        return status;
     }
 
     private static String getFileExtension(File file) {

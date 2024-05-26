@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
+import raven.alerts.MessageAlerts;
 
 public class MessageFill extends javax.swing.JFrame {
 
@@ -37,20 +39,35 @@ public class MessageFill extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     String selectedDesigner = (String) cbDesigner.getSelectedItem();
+                    ServiceMessage serviceMessage = new ServiceMessage();
+                    boolean success = false;
+
                     if (selectedDesigner.equals("All")) {
                         // Jika "All" dipilih, kirim pesan ke semua desainer
-                        List<ModelName> allDesigners = new ServiceMessage().getAllDesignersWithId();
+                        List<ModelName> allDesigners = serviceMessage.getAllDesignersWithId();
                         for (ModelName designer : allDesigners) {
                             insertMessageForDesigner(designer.getId());
                         }
+                        success = true;
                     } else {
                         // Jika dipilih desainer tertentu, cari receiverID berdasarkan username desainer
-                        int receiverID = new ServiceMessage().getDesignerIDByUsername(selectedDesigner);
-                        insertMessageForDesigner(receiverID);
+                        int receiverID = serviceMessage.getDesignerIDByUsername(selectedDesigner);
+                        if (receiverID > 0) {
+                            insertMessageForDesigner(receiverID);
+                            success = true;
+                        } else {
+                            MessageAlerts.getInstance().showMessage("Error", "Designer not found", MessageAlerts.MessageType.ERROR);
+                        }
                     }
+
+                    if (success) {
+                        MessageAlerts.getInstance().showMessage("Success", "Message sent", MessageAlerts.MessageType.SUCCESS);
+                    }
+
                 } catch (SQLException ex) {
                     // Handle exception
                     ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Failed to send message due to a database error.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -97,85 +114,47 @@ public class MessageFill extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        lbTitle = new javax.swing.JLabel();
-        lbContent = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtTitle = new Dashboard.Swing.TextField();
         txtContent = new Dashboard.Swing.TextField();
         cbDesigner = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        buttonDash1 = new swing.ButtonDash();
         rdImportant = new javax.swing.JRadioButton();
         rdMedium = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
         cmdSend = new swing.Button();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setType(java.awt.Window.Type.POPUP);
 
-        roundPanel1.setBackground(new java.awt.Color(217, 217, 217));
+        roundPanel1.setBackground(new java.awt.Color(3, 0, 45));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Add Message");
 
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Title");
 
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Content");
 
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Designer");
 
-        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(132, 132, 215), 1, true));
-        jPanel1.setOpaque(false);
-
-        lbTitle.setForeground(new java.awt.Color(0, 0, 0));
-        lbTitle.setText("Title");
-
-        lbContent.setForeground(new java.awt.Color(0, 0, 0));
-        lbContent.setText("Content");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbTitle)
-                    .addComponent(lbContent))
-                .addContainerGap(448, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbContent)
-                .addContainerGap(15, Short.MAX_VALUE))
-        );
-
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Delete date");
 
-        buttonDash1.setForeground(new java.awt.Color(0, 0, 0));
-        buttonDash1.setText("Refresh");
-
         buttonGroup1.add(rdImportant);
-        rdImportant.setForeground(new java.awt.Color(0, 0, 0));
+        rdImportant.setForeground(new java.awt.Color(255, 255, 255));
         rdImportant.setText("Important");
 
         buttonGroup1.add(rdMedium);
-        rdMedium.setForeground(new java.awt.Color(0, 0, 0));
+        rdMedium.setForeground(new java.awt.Color(255, 255, 255));
         rdMedium.setText("Medium");
 
         buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setForeground(new java.awt.Color(0, 0, 0));
+        jRadioButton3.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton3.setText("Low");
 
         cmdSend.setBackground(new java.awt.Color(132, 132, 215));
@@ -189,18 +168,15 @@ public class MessageFill extends javax.swing.JFrame {
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(rdImportant)
                         .addGap(35, 35, 35)
                         .addComponent(rdMedium)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButton3)
-                        .addGap(32, 32, 32)
-                        .addComponent(buttonDash1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jRadioButton3))
                     .addComponent(jLabel7)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +192,7 @@ public class MessageFill extends javax.swing.JFrame {
                                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                                     .addComponent(cbDesigner, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cmdSend, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,7 +204,6 @@ public class MessageFill extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(buttonDash1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rdImportant)
                     .addComponent(rdMedium)
                     .addComponent(jRadioButton3))
@@ -248,11 +223,9 @@ public class MessageFill extends javax.swing.JFrame {
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(cmdSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(32, 32, 32))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -307,7 +280,6 @@ public class MessageFill extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.ButtonDash buttonDash1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbDesigner;
     private swing.Button cmdSend;
@@ -317,10 +289,7 @@ public class MessageFill extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JLabel lbContent;
-    private javax.swing.JLabel lbTitle;
     private javax.swing.JRadioButton rdImportant;
     private javax.swing.JRadioButton rdMedium;
     private Dashboard.Swing.RoundPanel roundPanel1;

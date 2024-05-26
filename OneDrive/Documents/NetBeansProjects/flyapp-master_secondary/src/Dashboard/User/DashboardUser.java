@@ -71,7 +71,7 @@ public class DashboardUser extends javax.swing.JFrame {
                     showForm(new SeeOrderMain(user));
                 case 4 ->
                     showForm(new DesignerApply(user));
-                case 6 ->
+                case 5 ->
                     showLogOutPopup();
                 default ->
                     showForm(new Form(index + ""));
@@ -80,6 +80,7 @@ public class DashboardUser extends javax.swing.JFrame {
         menu.initMenu(event);
         menu.setSelected(0);
 //        setExtendedState(MAXIMIZED_BOTH);
+        setResizable(false);
     }
 
     private void init() {

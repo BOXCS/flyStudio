@@ -58,7 +58,6 @@ public class DesignerCard extends javax.swing.JPanel {
         lbName = new javax.swing.JLabel();
         lbInstagram = new javax.swing.JLabel();
         imageAvatar1 = new Dashboard.Swing.ImageAvatar();
-        buttonOutline1 = new swing.ButtonOutline();
         jLabel3 = new javax.swing.JLabel();
         lbEmail = new javax.swing.JLabel();
         lbMember = new javax.swing.JLabel();
@@ -83,10 +82,6 @@ public class DesignerCard extends javax.swing.JPanel {
         imageAvatar1.setGradientColor1(new java.awt.Color(63, 109, 217));
         imageAvatar1.setGradientColor2(new java.awt.Color(199, 42, 42));
         imageAvatar1.setImage(new javax.swing.ImageIcon(getClass().getResource("/Dashboard/User/icon/profile.png"))); // NOI18N
-
-        buttonOutline1.setForeground(new java.awt.Color(255, 255, 255));
-        buttonOutline1.setText("Go To Your Analythics");
-        buttonOutline1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,7 +132,6 @@ public class DesignerCard extends javax.swing.JPanel {
                         .addContainerGap()
                         .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(imageAvatar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttonOutline1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbInstagram, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -151,9 +145,7 @@ public class DesignerCard extends javax.swing.JPanel {
                 .addComponent(lbName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbInstagram)
-                .addGap(39, 39, 39)
-                .addComponent(buttonOutline1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(106, 106, 106)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(lbEmail))
@@ -182,7 +174,6 @@ public class DesignerCard extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.ButtonOutline buttonOutline1;
     private Dashboard.Swing.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;

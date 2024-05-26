@@ -15,8 +15,6 @@ public class Profile extends javax.swing.JPanel {
         initComponents();
     }
 
-    
-    
     public Profile(ModelUser user) {
         this.user = user;
         this.serviceDesigner = new ServiceDesigner();
@@ -61,7 +59,6 @@ public class Profile extends javax.swing.JPanel {
         lbRating = new javax.swing.JLabel();
         lbMedia = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        buttonDash1 = new swing.ButtonDash();
         jLabel10 = new javax.swing.JLabel();
         lbStatus1 = new javax.swing.JLabel();
 
@@ -100,10 +97,6 @@ public class Profile extends javax.swing.JPanel {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Instagram :");
 
-        buttonDash1.setForeground(new java.awt.Color(255, 255, 255));
-        buttonDash1.setText("Go to your analytics");
-        buttonDash1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-
         jLabel10.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Status :");
@@ -141,9 +134,6 @@ public class Profile extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lbMedia)
                         .addGap(43, 43, 43))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanel1Layout.createSequentialGroup()
-                        .addComponent(buttonDash1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
                     .addGroup(roundPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -175,9 +165,7 @@ public class Profile extends javax.swing.JPanel {
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(lbRating))
-                .addGap(36, 36, 36)
-                .addComponent(buttonDash1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -194,7 +182,6 @@ public class Profile extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private swing.ButtonDash buttonDash1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel4;

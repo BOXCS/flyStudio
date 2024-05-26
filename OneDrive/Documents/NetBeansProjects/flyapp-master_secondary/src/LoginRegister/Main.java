@@ -49,17 +49,18 @@ public class Main extends javax.swing.JFrame {
     private final double loginSize = 60;
     private final DecimalFormat df = new DecimalFormat("##0.###");
     private ServiceLogin service;
-//    private TransactionMonitor monitor;
+    private TransactionMonitor monitor;
     private Connection conn;
 
     public Main() {
         initComponents();
         init();
 //        setExtendedState(MAXIMIZED_BOTH);
+        setResizable(false);
 
         Connection conn = DatabaseConnection.getInstance().getConnection();
-//        monitor = new TransactionMonitor(conn);
-//        monitor.startMonitoring();
+        monitor = new TransactionMonitor(conn);
+        monitor.startMonitoring();
     }
 
     private void init() {
@@ -176,7 +177,8 @@ public class Main extends javax.swing.JFrame {
                         showMessage(Message.MessageType.ERROR, "Verify code incorrect");
                     }
                 } catch (SQLException ae) {
-                    showMessage(Message.MessageType.ERROR, "Error");
+                    showMessage(Message.MessageType.ERROR, "Error Unknown");
+                    ae.printStackTrace();
                 }
             }
         });
@@ -208,12 +210,12 @@ public class Main extends javax.swing.JFrame {
         try {
             ModelUser user = service.login(data);
             if (user != null) {
-//                monitor.stopMonitoring();
+                monitor.stopMonitoring();
                 this.dispose();
                 if ("admin".equalsIgnoreCase(user.getRole())) {
-                    DashboardAdmin.Adminmain(user); 
+                    DashboardAdmin.Adminmain(user);
                 } else if ("designer".equalsIgnoreCase(user.getRole())) {
-                    DashboardDesigner.Designermain(user); 
+                    DashboardDesigner.Designermain(user);
                 } else {
                     DashboardUser.Usermain(user);
                 }

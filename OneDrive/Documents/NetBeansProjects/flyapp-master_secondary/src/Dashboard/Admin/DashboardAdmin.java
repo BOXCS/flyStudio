@@ -68,6 +68,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
         menu.initMenu(event);
         menu.setSelected(0);
 //        setExtendedState(MAXIMIZED_BOTH);
+        setResizable(false);
     }
 
     private void showForm(Component com) {

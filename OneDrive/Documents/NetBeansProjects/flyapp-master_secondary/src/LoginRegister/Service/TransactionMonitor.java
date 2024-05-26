@@ -46,8 +46,8 @@ public class TransactionMonitor {
         // Pastikan koneksi sudah disediakan dari luar metode
         try {
             // Query untuk mendapatkan transaksi yang mendekati atau melewati tenggat waktu
-            String sql = "SELECT transaction_number, created_at, product_name, level FROM transaction "
-                    + "WHERE status != 'Late'";
+            String sql = "SELECT transaction_number, approve_at, product_name, level FROM transaction "
+                    + "WHERE status = 'Active'";
             PreparedStatement p = conn.prepareStatement(sql);
 
             ResultSet r = p.executeQuery();
@@ -56,7 +56,7 @@ public class TransactionMonitor {
 
             while (r.next()) {
                 String transactionNumber = r.getString("transaction_number");
-                Timestamp createdAt = r.getTimestamp("created_at");
+                Timestamp createdAt = r.getTimestamp("approve_at");
                 String productName = r.getString("product_name");
                 String level = r.getString("level");
 

@@ -14,7 +14,7 @@ public class CancelOrder extends javax.swing.JFrame {
         this.userName = null;
     }
 
-    public CancelOrder(String transactionNumber, String userName) {
+     public CancelOrder(String transactionNumber, String userName) {
         initComponents();
         this.transactionNumber = transactionNumber;
         this.userName = userName;
@@ -30,7 +30,9 @@ public class CancelOrder extends javax.swing.JFrame {
         areaReason = new Dashboard.Swing.textarea.TextArea();
         cmdSend = new swing.Button();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        roundPanel1.setBackground(new java.awt.Color(3, 0, 45));
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));

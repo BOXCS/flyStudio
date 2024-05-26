@@ -1,5 +1,6 @@
 package Dashboard.Designer.Form;
 
+import Dashboard.Designer.Component.Profile;
 import LoginRegister.Model.ModelUser;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -8,7 +9,7 @@ public class FormDesigner extends javax.swing.JPanel {
 
     private ModelUser user;
 
-    public FormDesigner(ModelUser user) {
+     public FormDesigner(ModelUser user) {
         this.user = user;
         initComponents();
 

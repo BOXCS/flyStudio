@@ -18,6 +18,7 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import raven.popup.GlassPanePopup;
 
 public class DashboardDesigner extends javax.swing.JFrame {
@@ -71,7 +72,9 @@ public class DashboardDesigner extends javax.swing.JFrame {
         };
         menu.initMenu(event);
         menu.setSelected(0);
-//        setExtendedState(MAXIMIZED_BOTH);
+        
+        setResizable(false);
+
     }
 
     private void showForm(Component com) {
