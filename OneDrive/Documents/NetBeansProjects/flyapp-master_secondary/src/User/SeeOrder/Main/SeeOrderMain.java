@@ -2,6 +2,7 @@ package User.SeeOrder.Main;
 
 import LoginRegister.Model.ModelUser;
 import Test.DisplayImage.Main.DisplayImageFromDatabase;
+import Test.DisplayImage.Main.DisplayImageFromDatabaseFull;
 import Test.DisplayImage.Main.DisplayImageFromDatabasePreview;
 import Test.InsertResult.ServiceResult;
 import User.Revision.Main.RevisionMain;
@@ -46,6 +47,9 @@ import java.awt.Frame;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import video.MainVideoJPreview;
 
 public class SeeOrderMain extends javax.swing.JPanel {
@@ -236,8 +240,8 @@ public class SeeOrderMain extends javax.swing.JPanel {
                         videoPlayer.playVideoFromDatabase();
                     } else if (product != null && (product.toString().equalsIgnoreCase("Design Graphic") || product.toString().equalsIgnoreCase("3D Modelling"))) {
                         // Menampilkan gambar dengan DisplayImageFromDatabase
-                        DisplayImageFromDatabase imageViewer = new DisplayImageFromDatabase(transactionNumber.toString());
-                        imageViewer.displayImageFromDatabase();
+                        DisplayImageFromDatabaseFull imageViewer = new DisplayImageFromDatabaseFull(transactionNumber.toString());
+                        imageViewer.displayCurrentImage();
                     } else {
                         JOptionPane.showMessageDialog(SeeOrderMain.this, "Unsupported product type.");
                     }
@@ -288,34 +292,43 @@ public class SeeOrderMain extends javax.swing.JPanel {
                     } else if (product != null && (product.toString().equalsIgnoreCase("Design Graphic") || product.toString().equalsIgnoreCase("3D Modelling"))) {
                         // Mendownload gambar dari database
                         try {
-                            byte[] imageData = ServiceResult.getImageFromDatabase(transactionNumber.toString());
-                            if (imageData != null) {
+                            List<byte[]> imagesData = ServiceResult.getImagesFromDatabase(transactionNumber.toString()); // Ubah metode ini untuk mendapatkan beberapa gambar
+                            if (imagesData != null && !imagesData.isEmpty()) {
                                 // Memungkinkan pengguna memilih direktori penyimpanan
                                 JnaFileChooser fileChooser = new JnaFileChooser();
-                                fileChooser.setTitle("Choose directory to save image");
+                                fileChooser.setTitle("Choose directory to save images");
                                 fileChooser.setMode(JnaFileChooser.Mode.Directories);
                                 Window window = SwingUtilities.getWindowAncestor(SeeOrderMain.this);
                                 boolean userSelection = fileChooser.showSaveDialog(window);
 
                                 if (userSelection) {
                                     File directory = fileChooser.getSelectedFile();
-                                    String fileName = transactionNumber.toString() + ".png"; // Atau ekstensi file yang sesuai
-                                    File file = new File(directory, fileName);
+                                    String zipFileName = transactionNumber.toString() + ".zip";
+                                    File zipFile = new File(directory, zipFileName);
 
-                                    // Simpan data gambar ke file di sistem file lokal
-                                    FileOutputStream fos = new FileOutputStream(file);
-                                    fos.write(imageData);
-                                    fos.close();
-                                    MessageAlerts.getInstance().showMessage("Download Success", "Image downloaded successfully.", MessageAlerts.MessageType.SUCCESS);
+                                    // Membuat file ZIP dan menambahkan gambar-gambar ke dalamnya
+                                    try (FileOutputStream fos = new FileOutputStream(zipFile); ZipOutputStream zos = new ZipOutputStream(fos)) {
+                                        int index = 1;
+                                        for (byte[] imageData : imagesData) {
+                                            String fileName = transactionNumber.toString() + "_" + index + ".png"; // Atau ekstensi file yang sesuai
+                                            ZipEntry zipEntry = new ZipEntry(fileName);
+                                            zos.putNextEntry(zipEntry);
+                                            zos.write(imageData);
+                                            zos.closeEntry();
+                                            index++;
+                                        }
+                                    }
+
+                                    MessageAlerts.getInstance().showMessage("Download Success", "Images downloaded successfully.", MessageAlerts.MessageType.SUCCESS);
                                 } else {
                                     MessageAlerts.getInstance().showMessage("Caution", "Download Cancelled", MessageAlerts.MessageType.DEFAULT);
                                 }
                             } else {
-                                JOptionPane.showMessageDialog(SeeOrderMain.this, "Failed to download image.");
+                                JOptionPane.showMessageDialog(SeeOrderMain.this, "Failed to download images.");
                             }
-                        } catch (SQLException | IOException e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
-                            JOptionPane.showMessageDialog(SeeOrderMain.this, "Failed to download image.");
+                            JOptionPane.showMessageDialog(SeeOrderMain.this, "Failed to download images.");
                         }
                     } else {
                         JOptionPane.showMessageDialog(SeeOrderMain.this, "Unsupported product type.");
@@ -374,27 +387,17 @@ public class SeeOrderMain extends javax.swing.JPanel {
             public void onRefund(int row) {
                 int selectedRow = tableLate.getSelectedRow();
                 if (selectedRow != -1) {
-                    Object type = tableActive.getValueAt(selectedRow, 0);
+//                    Object type = tableActive.getValueAt(selectedRow, 0);
                     int option = JOptionPane.showConfirmDialog(SeeOrderMain.this, "Refund this transaction?", "Confirm Refund", JOptionPane.YES_NO_OPTION);
                     if (option == JOptionPane.YES_OPTION) {
                         // Perbarui status transaksi menjadi "Refund Requested" di database
-                        Object transactionId = tableActive.getValueAt(selectedRow, 0); // Anda perlu mengganti ini dengan cara Anda mendapatkan ID transaksi
+                        Object transactionId = tableLate.getValueAt(selectedRow, 0); // Anda perlu mengganti ini dengan cara Anda mendapatkan ID transaksi
 
                         // Membuat objek ServiceMyOrder
                         ServiceMyOrder serviceMyOrder = new ServiceMyOrder();
                         // Memanggil method updateTransactionStatusLate pada objek serviceMyOrder
                         serviceMyOrder.updateTransactionStatusLate(transactionId.toString(), "Refund Requested");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(SeeOrderMain.this, "Please select a row first.");
-                }
-            }
-
-            @Override
-            public void onChange(int row) {
-                int selectedRow = tableLate.getSelectedRow();
-                if (selectedRow != -1) {
-                    Object type = tableActive.getValueAt(selectedRow, 0);
                 } else {
                     JOptionPane.showMessageDialog(SeeOrderMain.this, "Please select a row first.");
                 }

@@ -35,6 +35,7 @@ public class MainVideoJPreview extends JFrame {
         setSize(640, 360);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Hanya menutup frame ini, tidak semua frame
         setLocationRelativeTo(null);
+        setResizable(false);
 
         // Mencari lokasi instalasi VLC
         new uk.co.caprica.vlcj.factory.discovery.NativeDiscovery().discover();

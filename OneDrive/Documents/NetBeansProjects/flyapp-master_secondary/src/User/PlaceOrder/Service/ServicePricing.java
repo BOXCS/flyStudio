@@ -455,6 +455,17 @@ public class ServicePricing {
             // Update remaining revision count
             if (rowsAffected > 0) {
                 updateRemainingRevisionCount(transactionNumber, revisionCount);
+
+                // Retrieve designer's email
+                String designerEmail = getDesignerEmail(designer);
+
+                // Send email notification
+                if (designerEmail != null) {
+                    MailNotification mailNotif = new MailNotification();
+                    String notificationSubject = "Revision Needed";
+                    String notificationMessage = "Revision needed for transaction " + transactionNumber + "\n" + revision;
+                    mailNotif.sendNotification(designerEmail, notificationSubject, notificationMessage);
+                }
             }
 
             // Check if the insertion was successful

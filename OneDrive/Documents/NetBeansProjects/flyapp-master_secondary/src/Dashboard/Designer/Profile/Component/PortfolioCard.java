@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 import jnafilechooser.api.JnaFileChooser;
+import raven.alerts.MessageAlerts;
 
 public class PortfolioCard extends javax.swing.JPanel {
 
@@ -220,7 +221,8 @@ public class PortfolioCard extends javax.swing.JPanel {
                 }
 
                 serviceProfile.insertPortfolio(designerId, mediaType, mediaContent);
-                JOptionPane.showMessageDialog(this, "Portfolio added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//                JOptionPane.showMessageDialog(this, "Portfolio added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                MessageAlerts.getInstance().showMessage("Success", "Portfolio Added", MessageAlerts.MessageType.SUCCESS);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Failed to add portfolio to the database.", "Error", JOptionPane.ERROR_MESSAGE);
             }

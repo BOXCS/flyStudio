@@ -22,7 +22,7 @@ public class DisplayImageFromDatabasePreview {
     private List<ImageIcon> images; // List to hold multiple ImageIcons
     private int currentIndex = 0; // Current index of the displayed image
     private boolean imagesLoaded = false;
-    private final String watermarkPath = "D:\\Zaky\\NeatBeans Project\\flyapp\\src\\Test\\DisplayImage\\Main\\WatermarkImage.png";
+    private final String watermarkPath = "C:\\Users\\aisya\\OneDrive\\Documents\\NetBeansProjects\\flyapp-master_secondary\\src\\Test\\DisplayImage\\Main\\WatermarkImage.png";
     private final int frameWidth = 1280;
     private final int frameHeight = 720;
 

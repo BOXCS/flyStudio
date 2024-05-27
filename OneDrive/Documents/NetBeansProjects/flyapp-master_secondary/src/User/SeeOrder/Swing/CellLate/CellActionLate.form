@@ -19,8 +19,6 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="cmdRefund" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="cmdChange" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -29,10 +27,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="cmdRefund" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="cmdChange" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="cmdRefund" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -43,13 +38,6 @@
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/User/SeeOrder/icon/refund.png"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="User.SeeOrder.Swing.ButtonDash" name="cmdChange">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/User/SeeOrder/icon/rotate.png"/>
         </Property>
       </Properties>
     </Component>

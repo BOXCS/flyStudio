@@ -100,6 +100,19 @@ public class CartMain extends javax.swing.JPanel {
         editMain = new EditMain();
 
     }
+    
+    public void updateTableAfterEdit(String transactionNumber, String productName, String level, String amount) {
+        DefaultTableModel model = (DefaultTableModel) tableCart.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (model.getValueAt(i, 0).equals(transactionNumber)) {
+                model.setValueAt(productName, i, 1);
+                model.setValueAt(level, i, 2);
+                model.setValueAt(amount, i, 4);
+                break;
+            }
+        }
+        calculateTotal(); // Hitung ulang total setelah data diperbarui
+    }
 
     // Metode untuk menghitung jumlah total amount dari baris yang dicentang
     private void calculateTotal() {
@@ -305,7 +318,10 @@ public class CartMain extends javax.swing.JPanel {
         MessageAlerts.getInstance().showMessage("Confirmation", "Proceed with checkout?", MessageAlerts.MessageType.WARNING, MessageAlerts.YES_NO_OPTION, (pc, x) -> {
             if (x == MessageAlerts.YES_OPTION) {
                 for (int i = 0; i < model.getRowCount(); i++) {
-                    boolean isChecked = (boolean) model.getValueAt(i, 5);
+                    // Pastikan kolom yang diperiksa benar-benar mengandung nilai boolean
+                    Object isCheckedObj = model.getValueAt(i, 5);
+                    boolean isChecked = isCheckedObj instanceof Boolean && (Boolean) isCheckedObj;
+
                     if (isChecked) {
                         String productName = (String) model.getValueAt(i, 1);
                         String designer = (String) model.getValueAt(i, 3);

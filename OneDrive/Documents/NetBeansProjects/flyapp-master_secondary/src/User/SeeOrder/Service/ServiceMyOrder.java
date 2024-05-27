@@ -198,7 +198,7 @@ public class ServiceMyOrder {
 
         try {
             // Query untuk mendapatkan data dari tabel transaction dengan status Waiting dan username pengguna yang login
-            String sql = "SELECT transaction_number, username, product_name, level, designer, created_at, amount, status FROM transaction WHERE status = 'Late' AND username = ?";
+            String sql = "SELECT transaction_number, username, product_name, level, designer, created_at, amount, status FROM transaction WHERE (status = 'Late' OR status = 'Refund Requested') AND username = ?";
             PreparedStatement p = DatabaseConnection.getInstance().getConnection().prepareStatement(sql);
             p.setString(1, loggedInUsername); // Set parameter username pengguna yang login
             ResultSet r = p.executeQuery();

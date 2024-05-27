@@ -195,6 +195,7 @@ public class AddDesignerMain extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // Ambil input dari komponen
         String userName = txtUsername.getText().trim();
         String email = txtEmail.getText().trim();
         String password = String.valueOf(txtPass.getPassword());
@@ -202,33 +203,58 @@ public class AddDesignerMain extends javax.swing.JPanel {
         String typeContent = cbContent.getSelectedItem().toString();
         String status = jRadioButton1.isSelected() ? "Available" : "Unavailable";
 
+        // Validasi input
+        if (!validateInputs(userName, email, password, instagram, typeContent)) {
+            return; // Jika validasi gagal, hentikan eksekusi lebih lanjut
+        }
+
         designerLogin = new ModelDesignerLogin(0, userName, email, password, instagram, typeContent, status);
 
         try {
-            // Check for duplicate username before attempting to insert
+            // Periksa duplikasi username sebelum mencoba menyisipkan
             if (service.checkDuplicateDesigner(userName)) {
-                // Show an error message for duplicate username
-                MessageAlerts.getInstance().showMessage("Error", "Username already exist", MessageAlerts.MessageType.ERROR);
+                // Tampilkan pesan kesalahan untuk duplikasi username
+                MessageAlerts.getInstance().showMessage("Error", "Username already exists", MessageAlerts.MessageType.ERROR);
             } else {
-                // Attempt to insert the designer into the database
+                // Coba menyisipkan desainer ke dalam database
                 service.insertDesigner(designerLogin);
 
-                // Show a success message
-                MessageAlerts.getInstance().showMessage("Success", "Designer add successfully", MessageAlerts.MessageType.SUCCESS);
+                // Tampilkan pesan sukses
+                MessageAlerts.getInstance().showMessage("Success", "Designer added successfully", MessageAlerts.MessageType.SUCCESS);
 
-                // Optionally, you can reset the form or perform other actions upon success
+                // Opsi untuk mereset form atau melakukan tindakan lain setelah sukses
                 resetForm();
             }
         } catch (SQLException e) {
-            // Catch SQL exception
+            // Tangkap pengecualian SQL
             JOptionPane.showMessageDialog(this, "Failed to add designer to the database.", "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace(); // Log the exception for debugging purposes
+            e.printStackTrace(); // Log pengecualian untuk keperluan debugging
         } catch (Exception e) {
-            // Catch generic exception for other errors
+            // Tangkap pengecualian umum untuk kesalahan lainnya
             JOptionPane.showMessageDialog(this, "An unexpected error occurred.", "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace(); // Log the exception for debugging purposes
+            e.printStackTrace(); // Log pengecualian untuk keperluan debugging
         }
     }//GEN-LAST:event_btnCreateActionPerformed
+
+    private boolean validateInputs(String userName, String email, String password, String instagram, String typeContent) {
+        if (userName.isEmpty()) {
+            MessageAlerts.getInstance().showMessage("Input Error", "Username is required.", MessageAlerts.MessageType.ERROR);
+            return false;
+        }
+        if (email.isEmpty()) {
+            MessageAlerts.getInstance().showMessage("Input Error", "Email is required.", MessageAlerts.MessageType.ERROR);
+            return false;
+        }
+        if (password.isEmpty()) {
+            MessageAlerts.getInstance().showMessage("Input Error", "Password is required.", MessageAlerts.MessageType.ERROR);
+            return false;
+        }
+        if (typeContent.isEmpty() || typeContent.equals("Select Content Type")) {
+            MessageAlerts.getInstance().showMessage("Input Error", "Content type is required.", MessageAlerts.MessageType.ERROR);
+            return false;
+        }
+        return true;
+    }
 
     private void resetForm() {
         txtUsername.setText("");

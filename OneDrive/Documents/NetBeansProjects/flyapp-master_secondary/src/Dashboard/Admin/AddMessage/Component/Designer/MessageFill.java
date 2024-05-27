@@ -33,11 +33,18 @@ public class MessageFill extends javax.swing.JFrame {
             // Handle exception
             ex.printStackTrace();
         }
+
         // Di dalam ActionListener untuk tombol "SEND"
         cmdSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    // Validasi input sebelum mengirim pesan
+                    if (!validateInputs()) {
+                        dispose(); // Tutup frame jika validasi gagal
+                        return; // Jika validasi gagal, hentikan eksekusi lebih lanjut
+                    }
+
                     String selectedDesigner = (String) cbDesigner.getSelectedItem();
                     ServiceMessage serviceMessage = new ServiceMessage();
                     boolean success = false;
@@ -62,6 +69,7 @@ public class MessageFill extends javax.swing.JFrame {
 
                     if (success) {
                         MessageAlerts.getInstance().showMessage("Success", "Message sent", MessageAlerts.MessageType.SUCCESS);
+                        dispose(); // Tutup frame setelah pesan berhasil dikirim
                     }
 
                 } catch (SQLException ex) {
@@ -69,6 +77,26 @@ public class MessageFill extends javax.swing.JFrame {
                     ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Failed to send message due to a database error.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
+            }
+
+            private boolean validateInputs() {
+                if (txtTitle.getText().trim().isEmpty()) {
+                    MessageAlerts.getInstance().showMessage("Input Error", "Title is required.", MessageAlerts.MessageType.ERROR);
+                    return false;
+                }
+                if (txtContent.getText().trim().isEmpty()) {
+                    MessageAlerts.getInstance().showMessage("Input Error", "Content is required.", MessageAlerts.MessageType.ERROR);
+                    return false;
+                }
+                if (jDateChooser1.getDate() == null) {
+                    MessageAlerts.getInstance().showMessage("Input Error", "Expiration is required.", MessageAlerts.MessageType.ERROR);
+                    return false;
+                }
+                if (!rdImportant.isSelected() && !rdMedium.isSelected() && !jRadioButton3.isSelected()) {
+                    MessageAlerts.getInstance().showMessage("Input Error", "Please select a message priority.", MessageAlerts.MessageType.ERROR);
+                    return false;
+                }
+                return true;
             }
 
             private void insertMessageForDesigner(int receiverID) throws SQLException {

@@ -35,7 +35,7 @@ public class MailFootage {
         // Membuat sesi untuk mengirim email
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("flystudio79@gmail.com", "zqoltmgplenslzcr"); // Akun email studio
+                return new PasswordAuthentication("flystudio79@gmail.com", "wqqz eevl gglj flrw"); // Akun email studio
             }
         });
 

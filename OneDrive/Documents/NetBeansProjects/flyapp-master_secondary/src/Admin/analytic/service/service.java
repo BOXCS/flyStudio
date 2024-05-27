@@ -112,6 +112,8 @@ public class service {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
+                
+                
                 count = rs.getInt("finished_count");
             }
 

@@ -15,8 +15,10 @@ import java.sql.Timestamp;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import notif.Mail.MailNotification;
 
 public class ServiceResult {
@@ -124,6 +126,26 @@ public class ServiceResult {
         }
 
         return imageData;
+    }
+    
+    public static List<byte[]> getImagesFromDatabase(String transactionNumber) {
+        List<byte[]> imagesData = new ArrayList<>();
+        String query = "SELECT result FROM resultImage WHERE transaction_number = ?";
+
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, transactionNumber);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    byte[] imageData = resultSet.getBytes("result");
+                    imagesData.add(imageData);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return imagesData;
     }
 
     public static byte[] getVideoFromDatabase(String transactionNumber) throws SQLException, IOException {
